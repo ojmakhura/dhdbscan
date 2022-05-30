@@ -10,9 +10,9 @@
 		<!-- lookup parent from repository -->
 	</parent>
 	<groupId>bw.co.roguesystems</groupId>
-	<artifactId>dhdbscan</artifactId>
+	<artifactId>hdbscan-rest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>dhdbscan</name>
+	<name>hdbscan-rest</name>
 	<description>REST API for HDBSCAN</description>
 	<properties>
 		<java.version>11</java.version>
@@ -30,14 +30,14 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-boot-starter</artifactId>
-			<version>3.0.0</version>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.6.8</version>
 		</dependency>
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>3.0.0</version>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.6.8</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -64,5 +64,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

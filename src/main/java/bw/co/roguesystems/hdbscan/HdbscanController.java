@@ -1,4 +1,4 @@
-package bw.co.roguesystems.dhdbscan;
+package bw.co.roguesystems.hdbscan;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -63,7 +63,7 @@ public class HdbscanController {
 	}
 
     @PostMapping("/upload")
-    public ResponseEntity<?> loadFile(@RequestParam("file") MultipartFile multipartFile, @RequestParam("getMap") Boolean getMap) {
+    public ResponseEntity<?> loadFile(@RequestParam("file") MultipartFile multipartFile, @RequestParam("minPts") int minPts, @RequestParam("getMap") Boolean getMap) {
 
         if(multipartFile.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -73,7 +73,7 @@ public class HdbscanController {
             BufferedReader reader = new BufferedReader(new InputStreamReader(multipartFile.getInputStream()));
             double[][] finalDataSet = this.readInDataSet(reader);
 
-            Hdbscan sc = new Hdbscan(3);
+            Hdbscan sc = new Hdbscan(minPts);
 		    sc.run(finalDataSet);
 
             HdbscanResult result = new HdbscanResult();
@@ -88,10 +88,5 @@ public class HdbscanController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
         }
-    }
-
-    @GetMapping
-    public String testing() {
-        return "Testing ...";
     }
 }

@@ -1,10 +1,10 @@
-package bw.co.roguesystems.dhdbscan;
+package bw.co.roguesystems.hdbscan;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DhdbscanApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {

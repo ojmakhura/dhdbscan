@@ -1,0 +1,11 @@
+version: "3.3"
+services:
+  hdbscan:
+    image: hdbscan:1.0.0
+    container_name: hdbscan
+    ports:
+      - 8080
+    build:
+      context: .
+      dockerfile: Dockerfile
+    

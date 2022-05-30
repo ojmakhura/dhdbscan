@@ -1,4 +1,4 @@
-package bw.co.roguesystems.dhdbscan;
+package bw.co.roguesystems.hdbscan;
 
 import java.util.ArrayList;
 import java.util.HashMap;
