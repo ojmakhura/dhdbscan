@@ -11,5 +11,5 @@ RUN wget https://github.com/ojmakhura/hdbscan/releases/download/v5.1.2/hdbscan-p
 RUN apt install ./hdbscan-jar_5.1.2_amd64.deb ./hdbscan-java_5.1.2_amd64.deb ./hdbscan-lib_5.1.2_amd64.deb ./hdbscan-python_5.1.2_amd64.deb
 
 ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} hdbscan-rest-0.0.1-SNAPSHOT.jar
-ENTRYPOINT ["java","-jar","/hdbscan-rest-0.0.1-SNAPSHOT.jar"]
+COPY ${JAR_FILE} hdbscan-rest.jar
+ENTRYPOINT ["java","-jar","/hdbscan-rest.jar"]

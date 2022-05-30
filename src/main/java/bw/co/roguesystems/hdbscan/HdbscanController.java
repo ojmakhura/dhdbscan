@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,7 +63,7 @@ public class HdbscanController {
 		return finalDataSet;
 	}
 
-    @PostMapping("/upload")
+    @PostMapping("")
     public ResponseEntity<?> loadFile(@RequestParam("file") MultipartFile multipartFile, @RequestParam("minPts") int minPts, @RequestParam("getMap") Boolean getMap) {
 
         if(multipartFile.isEmpty()) {
@@ -77,6 +78,7 @@ public class HdbscanController {
 		    sc.run(finalDataSet);
 
             HdbscanResult result = new HdbscanResult();
+			result.setMinPts(minPts);
             result.setLabels(sc.getLabels());
 
             if(getMap) {
@@ -84,6 +86,41 @@ public class HdbscanController {
             }
 
             return ResponseEntity.ok().body(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+        }
+    }
+
+	@PostMapping("/explore")
+    public ResponseEntity<?> loadExplore(@RequestParam("file") MultipartFile multipartFile, @RequestParam("minPtsStart") int minPtsStart, @RequestParam("minPtsEnd") int minPtsEnd, @RequestParam("getMap") Boolean getMap) {
+
+        if(multipartFile.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(multipartFile.getInputStream()));
+            double[][] finalDataSet = this.readInDataSet(reader);
+
+            Hdbscan sc = new Hdbscan(minPtsStart);
+		    sc.run(finalDataSet);
+			Collection<HdbscanResult> results = new ArrayList<>();
+
+			for(int i = minPtsStart; i < minPtsEnd; i++) {
+
+				HdbscanResult result = new HdbscanResult();
+				result.setMinPts(i);
+				result.setLabels(sc.getLabels());
+
+				if(getMap) {
+					result.setClusterMap(sc.getClusterMap());
+				}
+
+				results.add(result);
+			}
+
+            return ResponseEntity.ok().body(results);
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
